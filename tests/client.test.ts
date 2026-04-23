@@ -140,7 +140,9 @@ describe("jobs", () => {
     server.use(
       http.post(`${BASE}/v1/generate`, async ({ request }) => {
         const body = (await request.json()) as Record<string, unknown>;
-        expect(body.sector_slug).toBe("banking");
+        // v1.8.0+ — body passed through verbatim (camelCase matches the
+        // Python SDK's convention, which the server accepts via aliases).
+        expect(body.sectorSlug).toBe("banking");
         return HttpResponse.json({
           id: "job_1",
           status: "queued",
@@ -283,11 +285,11 @@ describe("usage", () => {
 // ---------------------------------------------------------------------------
 
 describe("apiKeys", () => {
-  it("create sends POST with snake_case body", async () => {
+  it("create sends POST with body passed through verbatim (v1.8.0+)", async () => {
     server.use(
       http.post(`${BASE}/v1/api-keys`, async ({ request }) => {
         const body = (await request.json()) as Record<string, unknown>;
-        expect(body.expires_in_days).toBe(90);
+        expect(body.expiresInDays).toBe(90);
         return HttpResponse.json({
           id: "key_1",
           name: "Test Key",

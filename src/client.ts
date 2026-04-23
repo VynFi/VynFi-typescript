@@ -88,7 +88,10 @@ export class VynFiClient {
     let fetchBody: string | undefined;
     if (options?.body) {
       headers["Content-Type"] = "application/json";
-      fetchBody = JSON.stringify(convertKeys(options.body, toSnakeCase));
+      // Pass body through verbatim — server accepts camelCase aliases on
+      // most fields; some paths (e.g. `exportFormat: "sap"`) only fire
+      // under camelCase. Matches the Python SDK's pass-through semantics.
+      fetchBody = JSON.stringify(options.body);
     }
 
     let lastError: Error | undefined;

@@ -1,37 +1,48 @@
 import { VynFiClient, type VynFiClientOptions } from "./client.js";
-import { Jobs } from "./resources/jobs.js";
-import { Catalog } from "./resources/catalog.js";
-import { Usage } from "./resources/usage.js";
+import { Adversarial } from "./resources/adversarial.js";
+import { Ai } from "./resources/ai.js";
 import { ApiKeys } from "./resources/api-keys.js";
-import { Quality } from "./resources/quality.js";
-import { Webhooks } from "./resources/webhooks.js";
 import { Billing } from "./resources/billing.js";
+import { Catalog } from "./resources/catalog.js";
+import { Configs } from "./resources/configs.js";
+import { Credits } from "./resources/credits.js";
+import { Fingerprint } from "./resources/fingerprint.js";
+import { Jobs } from "./resources/jobs.js";
+import { Notifications } from "./resources/notifications.js";
+import { Optimizer } from "./resources/optimizer.js";
+import { Quality } from "./resources/quality.js";
+import { Scenarios } from "./resources/scenarios.js";
+import { Sessions } from "./resources/sessions.js";
+import { TemplatePacks } from "./resources/template-packs.js";
+import { Usage } from "./resources/usage.js";
+import { Webhooks } from "./resources/webhooks.js";
 
 export class VynFi {
   private readonly client: VynFiClient;
 
-  /** Jobs resource — submit, list, get, cancel, and download generation jobs. */
   public readonly jobs: Jobs;
-  /** Catalog resource — list sectors, tables, and fingerprints. */
   public readonly catalog: Catalog;
-  /** Usage resource — credit balance and daily usage breakdown. */
   public readonly usage: Usage;
-  /** API-key management resource. */
   public readonly apiKeys: ApiKeys;
-  /** Quality metrics resource. */
   public readonly quality: Quality;
-  /** Webhooks resource — CRUD and delivery history. */
   public readonly webhooks: Webhooks;
-  /** Billing resource — subscription, invoices, payment methods. */
   public readonly billing: Billing;
+  public readonly configs: Configs;
+  public readonly credits: Credits;
+  public readonly sessions: Sessions;
+  public readonly scenarios: Scenarios;
+  public readonly notifications: Notifications;
+  public readonly adversarial: Adversarial;
+  public readonly ai: Ai;
+  public readonly fingerprint: Fingerprint;
+  public readonly optimizer: Optimizer;
+  public readonly templatePacks: TemplatePacks;
 
   constructor(options: VynFiClientOptions);
   constructor(apiKey: string);
   constructor(optionsOrKey: VynFiClientOptions | string) {
     const options =
-      typeof optionsOrKey === "string"
-        ? { apiKey: optionsOrKey }
-        : optionsOrKey;
+      typeof optionsOrKey === "string" ? { apiKey: optionsOrKey } : optionsOrKey;
 
     this.client = new VynFiClient(options);
     this.jobs = new Jobs(this.client);
@@ -41,6 +52,16 @@ export class VynFi {
     this.quality = new Quality(this.client);
     this.webhooks = new Webhooks(this.client);
     this.billing = new Billing(this.client);
+    this.configs = new Configs(this.client);
+    this.credits = new Credits(this.client);
+    this.sessions = new Sessions(this.client);
+    this.scenarios = new Scenarios(this.client);
+    this.notifications = new Notifications(this.client);
+    this.adversarial = new Adversarial(this.client);
+    this.ai = new Ai(this.client);
+    this.fingerprint = new Fingerprint(this.client);
+    this.optimizer = new Optimizer(this.client);
+    this.templatePacks = new TemplatePacks(this.client);
   }
 }
 
@@ -48,6 +69,7 @@ export class VynFi {
 export { VynFiClient, type VynFiClientOptions } from "./client.js";
 export * from "./types.js";
 export * from "./errors.js";
+export { JobArchive } from "./archive.js";
 export { Jobs } from "./resources/jobs.js";
 export { Catalog } from "./resources/catalog.js";
 export { Usage } from "./resources/usage.js";
@@ -55,3 +77,13 @@ export { ApiKeys } from "./resources/api-keys.js";
 export { Quality } from "./resources/quality.js";
 export { Webhooks } from "./resources/webhooks.js";
 export { Billing } from "./resources/billing.js";
+export { Configs } from "./resources/configs.js";
+export { Credits } from "./resources/credits.js";
+export { Sessions } from "./resources/sessions.js";
+export { Scenarios } from "./resources/scenarios.js";
+export { Notifications } from "./resources/notifications.js";
+export { Adversarial } from "./resources/adversarial.js";
+export { Ai } from "./resources/ai.js";
+export { Fingerprint } from "./resources/fingerprint.js";
+export { Optimizer } from "./resources/optimizer.js";
+export { TemplatePacks } from "./resources/template-packs.js";
